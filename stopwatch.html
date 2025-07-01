@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stopwatch Web Application - Internship Task</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/4b8c3e6e8b.js" crossorigin="anonymous"></script>
+  <!-- Shared Styles for Dark Mode and Modern UI -->
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #232946 0%, #3e497a 100%);
+      font-family: 'Montserrat', Arial, sans-serif;
+      min-height: 100vh;
+    }
+    .glass-card {
+      background: rgba(255,255,255,0.13);
+      box-shadow: 0 8px 32px 0 rgba(44,62,80,0.18);
+      backdrop-filter: blur(16px) saturate(1.2);
+      -webkit-backdrop-filter: blur(16px) saturate(1.2);
+      border-radius: 1.5rem;
+      border: 1.5px solid rgba(255,255,255,0.18);
+    }
+    .stopwatch-display {
+      font-family: 'Merriweather', serif;
+      font-size: 2.8rem;
+      letter-spacing: 2px;
+      color: #232946;
+      background: rgba(255,255,255,0.85);
+      border-radius: 1rem;
+      padding: 1.2rem 2.2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 12px rgba(44,62,80,0.10);
+      text-align: center;
+    }
+    .stopwatch-btn {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      border-radius: 1.5rem;
+      padding: 0.7rem 2.2rem;
+      margin: 0 0.5rem;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.18s cubic-bezier(.4,0,.2,1);
+      box-shadow: 0 2px 8px rgba(44,62,80,0.08);
+      outline: none;
+      border: none;
+      cursor: pointer;
+    }
+    .stopwatch-btn.start {
+      background: linear-gradient(90deg, #ff4c60, #ff7c7c);
+      color: #fff;
+    }
+    .stopwatch-btn.pause {
+      background: linear-gradient(90deg, #6366f1, #60a5fa);
+      color: #fff;
+    }
+    .stopwatch-btn.reset {
+      background: #fff;
+      color: #ff4c60;
+      border: 1.5px solid #ff4c60;
+    }
+    .stopwatch-btn.lap {
+      background: #fff;
+      color: #6366f1;
+      border: 1.5px solid #6366f1;
+    }
+    .stopwatch-btn:hover, .stopwatch-btn:focus {
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 6px 24px rgba(44,62,80,0.13);
+    }
+    .lap-list {
+      max-height: 180px;
+      overflow-y: auto;
+      margin-top: 1.2rem;
+      background: rgba(255,255,255,0.7);
+      border-radius: 1rem;
+      padding: 0.7rem 1.2rem;
+      box-shadow: 0 1px 6px rgba(44,62,80,0.07);
+    }
+    .lap-list li {
+      font-family: 'Montserrat', Arial, sans-serif;
+      color: #232946;
+      font-size: 1.05rem;
+      margin-bottom: 0.3rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    @media (max-width: 600px) {
+      .stopwatch-display {
+        font-size: 2rem;
+        padding: 0.7rem 1.2rem;
+      }
+      .glass-card {
+        padding: 1.2rem 0.5rem 1rem 0.5rem;
+        max-width: 98vw;
+      }
+    }
+  </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen">
+  <div class="w-full max-w-2xl mx-auto mt-8">
+    <!-- Header Section -->
+    <div class="mb-8 text-center">
+      <div class="inline-block px-6 py-2 border-2 border-pink-500 rounded-lg mb-4">
+        <span class="text-lg font-bold tracking-widest text-white" style="letter-spacing:2px;">TASK 02</span>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-merriweather font-bold text-white mb-2">STOPWATCH WEB APPLICATION</h1>
+    </div>
+    <!-- Stopwatch Card -->
+    <div class="glass-card p-8 flex flex-col items-center mx-auto w-full">
+      <!-- Dark Mode Toggle (inside card) -->
+      <div class="w-full flex justify-end mb-4">
+        <button id="darkModeToggle" class="dark-toggle-btn flex items-center px-5 py-2 rounded-full shadow-lg font-semibold text-base transition focus:outline-none" title="Toggle dark mode" aria-label="Toggle dark mode">
+          <span class="icon mr-2"><i class="fas fa-moon"></i></span>
+          <span class="toggle-text">Dark Mode</span>
+        </button>
+      </div>
+      <div class="stopwatch-display" id="display">00:00:00.00</div>
+      <div class="flex flex-wrap justify-center mb-4">
+        <button class="stopwatch-btn start" id="startBtn"><i class="fas fa-play mr-2"></i>Start</button>
+        <button class="stopwatch-btn pause hidden" id="pauseBtn"><i class="fas fa-pause mr-2"></i>Pause</button>
+        <button class="stopwatch-btn reset" id="resetBtn"><i class="fas fa-undo mr-2"></i>Reset</button>
+        <button class="stopwatch-btn lap" id="lapBtn"><i class="fas fa-flag mr-2"></i>Lap</button>
+      </div>
+      <ul class="lap-list w-full text-left text-sm" id="laps"></ul>
+    </div>
+    <!-- Navigation Buttons -->
+    <div class="flex justify-between items-center mt-8 w-full max-w-md mx-auto">
+      <a href="index.html" class="px-6 py-2 rounded-lg bg-gradient-to-r from-indigo-500 to-pink-500 text-white font-semibold shadow-md hover:from-indigo-600 hover:to-pink-600 transition flex items-center"><i class="fas fa-arrow-left mr-2"></i>Previous</a>
+      <a href="tictactoe.html" class="px-6 py-2 rounded-lg bg-gradient-to-r from-pink-500 to-indigo-500 text-white font-semibold shadow-md hover:from-pink-600 hover:to-indigo-600 transition flex items-center">Next<i class="fas fa-arrow-right ml-2"></i></a>
+    </div>
+  </div>
+  <script src="stopwatch.js"></script>
+</body>
+</html> 
