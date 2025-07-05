@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Portfolio Internship</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/4b8c3e6e8b.js" crossorigin="anonymous"></script>
+  <!-- Custom CSS -->
+  <style>
+    @keyframes fade-in-down {
+      0% { opacity: 0; transform: translateY(-40px) scale(0.98); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .animate-fade-in-down {
+      animation: fade-in-down 0.35s cubic-bezier(.4,0,.2,1);
+    }
+    body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+    .login-card {
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
+      backdrop-filter: blur(12px) saturate(1.2);
+      -webkit-backdrop-filter: blur(12px) saturate(1.2);
+      border-radius: 1.25rem;
+      border: 1.5px solid rgba(200, 200, 255, 0.18);
+    }
+    input:focus, button:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px #a5b4fc55, 0 2px 8px rgba(99,102,241,0.08);
+      border-color: #6366f1;
+    }
+    button[type="submit"] {
+      box-shadow: 0 4px 16px rgba(236,72,153,0.13);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    button[type="submit"]:hover {
+      box-shadow: 0 8px 32px rgba(236,72,153,0.18);
+      transform: translateY(-2px) scale(1.03);
+    }
+    .avatar-gradient {
+      background: linear-gradient(135deg, #ec4899 0%, #6366f1 100%);
+      border-radius: 50%;
+      padding: 0.35rem;
+      display: inline-block;
+      box-shadow: 0 2px 12px rgba(99,102,241,0.13);
+    }
+    @media (max-width: 600px) {
+      .login-card {
+        padding: 1.2rem 0.5rem 1rem 0.5rem;
+        max-width: 98vw;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center">
+  <div class="w-full max-w-md login-card p-0 animate-fade-in-down">
+    <!-- Header -->
+    <div class="flex flex-col items-center justify-center py-6 px-8 border-b border-gray-100 bg-gradient-to-tr from-indigo-50 to-pink-50 rounded-t-2xl">
+      <div class="avatar-gradient mb-2">
+        <i class="fas fa-user-circle text-5xl text-white"></i>
+      </div>
+      <span class="font-merriweather text-xl font-bold text-indigo-600 tracking-wide mb-1">Portfolio</span>
+      <span class="text-xs text-gray-400 tracking-wider">Internship Portal Login</span>
+    </div>
+    <!-- Form -->
+    <div class="px-8 py-8">
+      <h2 class="text-2xl font-bold text-gray-800 mb-1">Sign in to your account</h2>
+      <p class="text-gray-500 text-sm mb-6">Welcome back! Please login to continue.</p>
+      <form id="login-form" class="space-y-6" autocomplete="on">
+        <div class="relative">
+          <input id="login-email" type="email" required class="peer h-12 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-indigo-500 bg-transparent transition" placeholder="Email address" autocomplete="email" />
+          <label for="login-email" class="absolute left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3.5 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-indigo-500">Email</label>
+        </div>
+        <div class="relative">
+          <input id="login-password" type="password" required class="peer h-12 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-pink-400 bg-transparent transition" placeholder="Password" autocomplete="current-password" />
+          <label for="login-password" class="absolute left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3.5 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-pink-500">Password</label>
+          <button type="button" id="toggle-password" class="absolute right-0 top-3 text-gray-400 hover:text-pink-400 focus:outline-none" tabindex="-1">
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+        <div>
+          <button type="submit" class="w-full px-6 py-3 rounded-lg bg-gradient-to-r from-pink-500 to-indigo-500 text-white font-semibold text-lg shadow-md hover:from-pink-600 hover:to-indigo-600 transition">Login</button>
+        </div>
+        <div class="flex justify-end">
+          <a href="#" id="show-forgot-password" class="text-xs text-indigo-500 hover:underline">Forgot password?</a>
+        </div>
+      </form>
+
+      <form id="forgot-password-form" class="space-y-6 hidden" autocomplete="on">
+        <div class="relative">
+            <input id="forgot-email" type="email" required class="peer h-12 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-indigo-500 bg-transparent transition" placeholder="Email address" autocomplete="email" />
+            <label for="forgot-email" class="absolute left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3.5 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-indigo-500">Email</label>
+        </div>
+        <div>
+            <button type="submit" class="w-full px-6 py-3 rounded-lg bg-gradient-to-r from-pink-500 to-indigo-500 text-white font-semibold text-lg shadow-md hover:from-pink-600 hover:to-indigo-600 transition">Send Reset Link</button>
+        </div>
+      </form>
+
+      <form id="signup-form" class="space-y-6 hidden" autocomplete="on">
+        <div class="relative">
+            <input id="signup-email" type="email" required class="peer h-12 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-indigo-500 bg-transparent transition" placeholder="Email address" autocomplete="email" />
+            <label for="signup-email" class="absolute left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3.5 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-indigo-500">Email</label>
+        </div>
+        <div class="relative">
+            <input id="signup-password" type="password" required class="peer h-12 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-pink-400 bg-transparent transition" placeholder="Password" autocomplete="new-password" />
+            <label for="signup-password" class="absolute left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3.5 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-pink-500">Password</label>
+        </div>
+        <div class="relative">
+            <input id="confirm-password" type="password" required class="peer h-12 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-pink-400 bg-transparent transition" placeholder="Confirm Password" autocomplete="new-password" />
+            <label for="confirm-password" class="absolute left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3.5 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-pink-500">Confirm Password</label>
+        </div>
+        <div>
+            <button type="submit" class="w-full px-6 py-3 rounded-lg bg-gradient-to-r from-pink-500 to-indigo-500 text-white font-semibold text-lg shadow-md hover:from-pink-600 hover:to-indigo-600 transition">Sign Up</button>
+        </div>
+      </form>
+
+      <div id="form-toggle" class="mt-6 text-center text-sm text-gray-500">
+        Don't have an account? <a href="#" id="show-signup" class="text-pink-500 hover:underline">Sign up</a>
+        <span class="hidden">Already have an account? <a href="#" id="show-login" class="text-pink-500 hover:underline">Login</a></span>
+      </div>
+      <div class="mt-4 text-center">
+        <a href="index.html" class="text-indigo-500 hover:underline text-sm"><i class="fas fa-arrow-left mr-1"></i>Back to Home</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const loginForm = document.getElementById('login-form');
+    const signupForm = document.getElementById('signup-form');
+    const showSignup = document.getElementById('show-signup');
+    const showLogin = document.getElementById('show-login');
+    const forgotPasswordForm = document.getElementById('forgot-password-form');
+    const showForgotPassword = document.getElementById('show-forgot-password');
+    const formToggle = document.getElementById('form-toggle');
+    const h2 = document.querySelector('.px-8 h2');
+    const p = document.querySelector('.px-8 p');
+
+    showForgotPassword.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginForm.classList.add('hidden');
+        signupForm.classList.add('hidden');
+        forgotPasswordForm.classList.remove('hidden');
+        formToggle.classList.add('hidden');
+        h2.textContent = 'Reset Password';
+        p.textContent = 'Enter your email to receive a reset link.';
+    });
+
+    showSignup.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginForm.classList.add('hidden');
+        signupForm.classList.remove('hidden');
+        formToggle.children[0].classList.add('hidden');
+        formToggle.children[1].classList.remove('hidden');
+        h2.textContent = 'Create a new account';
+        p.textContent = 'Join us! Please fill in the details to get started.';
+    });
+
+    showLogin.addEventListener('click', (e) => {
+        e.preventDefault();
+        signupForm.classList.add('hidden');
+        forgotPasswordForm.classList.add('hidden');
+        loginForm.classList.remove('hidden');
+        formToggle.classList.remove('hidden');
+        formToggle.children[1].classList.add('hidden');
+        formToggle.children[0].classList.remove('hidden');
+        h2.textContent = 'Sign in to your account';
+        p.textContent = 'Welcome back! Please login to continue.';
+    });
+
+    // Toggle password visibility
+    const togglePassword = document.getElementById('toggle-password');
+    const password = document.getElementById('login-password');
+    togglePassword.addEventListener('click', function () {
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        this.querySelector('i').classList.toggle('fa-eye-slash');
+    });
+
+    // Signup form validation and submission
+    signupForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('signup-email').value;
+        const password = document.getElementById('signup-password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+
+        if (password !== confirmPassword) {
+            alert('Passwords do not match!');
+            return;
+        }
+
+        // Simulate user registration
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const userExists = users.some(user => user.email === email);
+
+        if (userExists) {
+            alert('User with this email already exists!');
+        } else {
+            users.push({ email, password });
+            localStorage.setItem('users', JSON.stringify(users));
+            alert('Sign up successful! Please log in.');
+            showLogin.click();
+        }
+    });
+
+    // Login form submission
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+
+        // Simulate user login
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const user = users.find(user => user.email === email && user.password === password);
+
+        if (user) {
+            alert('Login successful!');
+            // Redirect to a protected page or update UI
+            window.location.href = 'index.html'; // Redirect to home page
+        } else {
+            alert('Invalid email or password.');
+        }
+    });
+
+    // Forgot password form submission
+    forgotPasswordForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('forgot-email').value;
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const userExists = users.some(user => user.email === email);
+
+        if (userExists) {
+            alert('A password reset link has been sent to your email address.');
+            showLogin.click();
+        } else {
+            alert('No account found with that email address.');
+        }
+    });
+  </script>
+</body>
+    </div>
+  </div>
+</body>
+</html>
